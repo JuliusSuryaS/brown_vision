@@ -37,25 +37,9 @@ function output = my_imfilter(image, filter)
 
 m = size(image,1);
 n = size(image,2);
+
 fsize = size(filter,2);
 
 
 
 
-for c = 1 : 3 %RGB COLOR
-    % pad img based on the size of fsize
-    img_pad = padarray(image(:,:,c), [(fsize-1)/2 (fsize-1)/2]);
-    for i = 1: m
-        for j = 1 : n
-            image(i,j,c) = sum(sum(img_pad(i:i+fsize-1,j:j+fsize-1).*filter));
-        end
-    end
-end
-
-red =  image(:,:,1);
-green = image(:,:,2);
-blue = image(:,:,3);
-
-% Merge using cat
-image = cat(3, red, green, blue);
-output =  image;

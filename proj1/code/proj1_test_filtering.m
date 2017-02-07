@@ -34,7 +34,7 @@ imwrite(blur_image, 'blur_image.jpg', 'quality', 95);
 %% Large blur
 %This blur would be slow to do directly, so we instead use the fact that
 %Gaussian blurs are separable and blur sequentially in each direction.
-large_1d_blur_filter = fspecial('Gaussian', [25 1], 10);
+large_1d_blur_filter = fspecial('Gaussian', [25 25], 10);
 
 large_blur_image = my_imfilter(test_image, large_1d_blur_filter);
 large_blur_image = my_imfilter(large_blur_image, large_1d_blur_filter'); %notice the ' operator which transposes the filter

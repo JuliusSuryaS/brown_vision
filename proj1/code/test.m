@@ -14,27 +14,31 @@ filter = fspecial('Gaussian', cutoff_frequency*4+1, cutoff_frequency);
 red = image1(:,:,1);
 green = image1(:,:,2);
 blue = image1(:,:,3);
-% imshow([red green blue]);
-
-
-
-
+imold =cat(3, red, green, blue);
 
 
 %indexing for loop
 m = size(image1,1);
 n = size(image1,2);
-impad = padarray(image1,[14 14]);
 
-for c = 1 : 3 %RGB COLOR 3 LAYER 
+k = [0 0 0; 0 1 0; 0 0 0];
+
+
+for c = 1 : 3 %RGB COLOR 3 LAYER
+    impad = padarray(image1(:,:,c),[1 1]);
     for i = 1 : m
         for j =  1 : n
-            image1(i,j,c) = sum(sum(impad(i:i+28,j:j+28).*filter));
+            image1(i,j,c) = sum(sum(impad(i:i+2,j:j+2).*k));
         end
     end
 end
 
-imshow(image1);
+red = image1(:,:,1);
+green = image1(:,:,2);
+blue = image1(:,:,3);
+imnew = cat(3, red, green,blue);
+
+
 
 
 
