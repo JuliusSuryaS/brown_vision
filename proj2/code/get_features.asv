@@ -57,10 +57,6 @@ function [features] = get_features(image, x, y, feature_width)
 %Placeholder that you can delete. Empty features.
 % features = zeros(size(x,1), 128);
 
-vtempx = zeros(1,8);
-vtemp = zeros(4,32);
-v = zeros(1,128);
-
 % Take image value of features add 16x16 size
 % get the gradient direction
 for i = 1 : size(x,1)
@@ -70,45 +66,11 @@ for i = 1 : size(x,1)
     [gx gy] = imgradientxy(imhold,'prewitt'); % find its gradient
     [gmag gdir] = imgradient(gx,gy);    % find the gradient direction
     
-    % gdir is 16 x 16 -> but we need to groups into 4 x 4 consists of 8
-    % direction so 4 x (4 x 32) = 128 dim
+    % gdir is 16 x 16 -> but we need to groups into 4 x 4
     
-    % 16 x 16 so 4 loop m,n
-    for m =  1 : 4 % 4 times loop starting point 1 5 9 13
-        count1 = (m-1) * 4 + 1; % starting point m 1, 5, 9, 13
-        for n = 1: 4
-            count2 = (n-1) * 4 + 1; % starting point n 1, 5, 9, 13
-            gnew = gdir(count1:count1+3,count2:count2+3); % 1-4, 5-8, 9-12, 13-16 
-            gnew = gnew(:);
-            gnew = gnew';
-            vtempx = hist(gnew,[-180,-135,-90,-45,45,90,135,180]);
-            
-            % v gradient direction in histogram 4 x 4
-            % 4 x (4x8) => histogram consists of 8 direction [-180 :45: 180]
-            count3 = (n-1) * 8 + 1; % starting point 1, 9, 17, 25
-            vtemp(m,count3:count3+7) = vtempx; % eq v(1,1:8), v(1,9:16) .. etc
-            
-            % v size = 4 x 32 for every interest point
-            % note there are 128 interest point 
-            
-        end % n loop
-        % resize vtemp into 128 vector array
-        varr = (vtemp(:))';
-        
-    end % m loop
-    
-    % concate v  for every 128 interest point
-    % later remove 1st matrix of v, for concation purpose
-    v = [v; varr];
-    
-end % i loop
+end
 
-% remove first 1 x 128 matrix element of v(1,1:128) -> zeros matrix ( for
-% concate) so
-features = v(2:size(v,1),:); 
-
-
-end % end function
+end
 
 
 

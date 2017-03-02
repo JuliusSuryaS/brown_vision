@@ -98,10 +98,10 @@ for i = 1:size(x1)
     
     % concate v  for every 128 interest point
     % later remove 1st matrix of v, for concation purpose
-    v = [v; varr];
+    v = [v; vtemp];
 end
 
-% remove first 1 x 128 matrix element of v(1,1:128) -> zeros matrix 
+% remove first 1 x 128 matrix element of v(:4,1:32) -> zeros matrix 
 v = v(2:size(v,1),:); 
 
 % v 
